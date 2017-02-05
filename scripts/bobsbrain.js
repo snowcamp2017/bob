@@ -5,8 +5,6 @@
 
 const fetch = require('node-fetch');
 
-console.log("😛", process.env.FROM_GITHUB_HOOK)
-
 module.exports =  (robot) =>  {
 
   robot.messageRoom('general', 'Hello :earth_africa:')
@@ -15,29 +13,20 @@ module.exports =  (robot) =>  {
     res.send(`yo ${res.message.user.name}`);
   });
 
+  robot.hear(/tired|too hard|upset|bored/i, (res) => {
+    res.send(`😡 ${res.message.user.name}`);
+  });
+
+  robot.hear(/bob help me with (.*)/i, (res) => {
+    res.send(`help yourself with ${res.match[1]} 😜`);
+  });
+
   // listen to webhook(s) from GitHub platform
   robot.router.post(process.env.FROM_GITHUB_HOOK, (req, res) => {
 
     let event = req.headers['x-github-event'];
-    let owner = req.body.repository.owner.login;
-    let branch = req.body.ref !== undefined ? req.body.ref.split("/").pop() : undefined;
-    let repository_url = req.body.repository.clone_url;
-    let repository_name = req.body.repository.name;
-    let action = req.body.action;
-    let merged = req.body.pull_request !== undefined ? req.body.pull_request.merged : undefined;
 
-    let messages = [
-      `:zap: Event: ${event}\n`,
-      branch !== undefined ? `  - branch: ${branch}\n` : "",
-      action !== undefined ? `  - action: ${action}\n` : "",
-      owner !== undefined ?  `- owner: ${owner}\n` : "",
-      `:panda_face: sender: ${req.body.sender.login} | ${req.body.sender.html_url}\n`,
-      req.body.organization !== undefined ? `:house: organization: ${req.body.organization.login} | ${req.body.organization.url}\n` : "",
-      `:package: repository: ${req.body.repository.name} | ${req.body.repository.html_url}\n`,
-      req.body.head_commit !== undefined && req.body.deleted == false ? `:page_facing_up: head_commit: ${req.body.head_commit.message}\n` : "",
-      req.body.head_commit !== undefined && req.body.deleted == false ? `${req.body.head_commit.url}\n` : "",
-      merged !== undefined ? `pull request merged: ${merged}\n` : ""
-    ]
+    let messages = []
 
     if(event=="issues") {
       messages.push(`issue: "${req.body.issue.title}" by ${req.body.issue.user.login} `);
@@ -55,7 +44,6 @@ module.exports =  (robot) =>  {
     console.log("🤖", messages.join(""))
 
     res.status(200).end()
-
 
   })
 
