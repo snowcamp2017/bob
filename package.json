@@ -9,6 +9,7 @@
     "hubot-diagnostics": "0.0.1",
     "hubot-help": "^0.2.0",
     "hubot-rocketchat": "1.0.3",
+    "hubot-shell": "1.0.2",
     "hubot-rules": "^0.1.1",
     "hubot-shipit": "^0.2.0",
     "hubot-pugme": "^0.1.0",
