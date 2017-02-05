@@ -3,5 +3,6 @@
   "hubot-help",
   "hubot-rules",
   "hubot-pugme",
-  "hubot-shipit"
+  "hubot-shipit",
+  "hubot-shell"
 ]
