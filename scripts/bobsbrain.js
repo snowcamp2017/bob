@@ -10,6 +10,8 @@ module.exports =  (robot) =>  {
   robot.messageRoom('general', 'Hello :earth_africa:')
 
   robot.hear(/bob yo/, (res) => {
+    //let text = res.envelope.message.text;
+    //console.log("👽", text)
     res.send(`yo ${res.message.user.name}`);
   });
 
